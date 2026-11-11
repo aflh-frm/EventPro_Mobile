@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Header melengkung dengan Vector Drawable (materi P9 - Model Setengah Lingkaran).
+    Dipakai di header halaman Profil. Tinggi View minimal 220dp.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <path android:pathData="M0,0 L100,0 L100,75 C75,90 25,90 0,75 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endColor="@color/secondary_indigo"
+                android:endX="100"
+                android:endY="100"
+                android:startColor="@color/primary_blue"
+                android:startX="0"
+                android:startY="0"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+</vector>

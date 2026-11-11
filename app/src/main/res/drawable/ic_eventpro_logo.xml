@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Background Badge Circle with Gradient -->
+    <path
+        android:pathData="M60,0 C93.137,0 120,26.863 120,60 C120,93.137 93.137,120 60,120 C26.863,120 0,93.137 0,60 C0,26.863 26.863,0 60,0 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="135"
+                android:endColor="#6C5CE7"
+                android:startColor="#2563EB"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- White EP / Speaker Icon Graphic inside Badge -->
+    <!-- E shape -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,35 L68,35 C72,35 72,43 68,43 L42,43 L42,56 L62,56 C66,56 66,64 62,64 L42,64 L42,77 L68,77 C72,77 72,85 68,85 L32,85 C28,85 28,35 32,35 Z" />
+
+    <!-- Megaphone / Dynamic Swoosh Motif for P / Event -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M72,35 C83,35 90,42 90,52 C90,62 82,69 72,69 L72,35 Z M72,43 L72,61 C77,61 82,57 82,52 C82,47 77,43 72,43 Z" />
+
+</vector>
