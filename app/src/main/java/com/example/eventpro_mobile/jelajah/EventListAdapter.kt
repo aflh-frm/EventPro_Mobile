@@ -1,49 +1,51 @@
 package com.example.eventpro_mobile.jelajah
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.eventpro_mobile.data.Event
 import com.example.eventpro_mobile.databinding.ItemEventListBinding
 import com.example.eventpro_mobile.util.loadEventImage
 import com.example.eventpro_mobile.util.toRupiah
 
 /**
- * Custom Adapter ListView (materi MessageAdapter) untuk daftar event.
- * convertView dipakai ulang supaya scroll tetap ringan.
+ * Adapter RecyclerView untuk daftar event di halaman Jelajah (materi Pertemuan 10).
+ * onCreateViewHolder membuat baris, onBindViewHolder mengisi baris dengan data.
  */
 class EventListAdapter(
-    context: Context,
-    private val onClick: (Event) -> Unit
-) : ArrayAdapter<Event>(context, 0, mutableListOf()) {
+    private val onItemClick: (Event) -> Unit
+) : RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val binding = if (convertView == null) {
-            ItemEventListBinding.inflate(LayoutInflater.from(context), parent, false).also {
-                it.root.tag = it
-            }
-        } else {
-            convertView.tag as ItemEventListBinding
-        }
+    private val eventList = mutableListOf<Event>()
 
-        val event = getItem(position) ?: return binding.root
+    // ViewHolder menyimpan binding satu baris agar tidak dicari ulang
+    inner class EventViewHolder(val binding: ItemEventListBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-        binding.imgEvent.loadEventImage(event.imageUrl)
-        binding.tvCategory.text = event.category
-        binding.tvTitle.text = event.title
-        binding.tvDate.text = "${event.shortDate} • ${event.location}"
-        binding.tvPrice.text = event.price.toRupiah()
-
-        // Event klik ditangani di adapter (materi: listener di adapter)
-        binding.root.setOnClickListener { onClick(event) }
-        return binding.root
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
+        val binding = ItemEventListBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+        return EventViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+        val item = eventList[position]
+        with(holder.binding) {
+            imgEvent.loadEventImage(item.imageUrl)
+            tvCategory.text = item.category
+            tvTitle.text = item.title
+            tvDate.text = "${item.shortDate} • ${item.location}"
+            tvPrice.text = item.price.toRupiah()
+            root.setOnClickListener { onItemClick(item) }
+        }
+    }
+
+    override fun getItemCount(): Int = eventList.size
+
     fun submit(events: List<Event>) {
-        clear()
-        addAll(events)
+        eventList.clear()
+        eventList.addAll(events)
         notifyDataSetChanged()
     }
 }

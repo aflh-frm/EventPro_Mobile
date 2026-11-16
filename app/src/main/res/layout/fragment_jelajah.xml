@@ -70,16 +70,13 @@
         android:layout_weight="1"
         android:background="@color/background">
 
-        <!-- ListView + Custom Adapter (materi ListView) -->
-        <ListView
-            android:id="@+id/listEvents"
+        <!-- RecyclerView + LinearLayoutManager -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEvents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"
-            android:padding="16dp"
-            android:scrollbarStyle="outsideOverlay" />
+            android:padding="16dp" />
 
         <LinearLayout
             android:id="@+id/layoutEmpty"

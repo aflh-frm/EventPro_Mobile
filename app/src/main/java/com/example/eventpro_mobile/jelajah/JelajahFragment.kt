@@ -13,6 +13,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventpro_mobile.BaseActivity
 import com.example.eventpro_mobile.DetailActivity
 import com.example.eventpro_mobile.R
@@ -27,7 +28,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 /**
  * 05 Jelajah Event.
  * Materi: Toolbar + MenuProvider (P9), TextInputLayout clear_text (P9), ChipGroup (P9),
- * ListView + Custom Adapter, AlertDialog (P4), Intent putExtra (P4).
+ * RecyclerView + LinearLayoutManager (P10), AlertDialog (P4), Intent putExtra (P4).
  */
 class JelajahFragment : Fragment() {
 
@@ -76,12 +77,14 @@ class JelajahFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        adapter = EventListAdapter(requireContext()) { event ->
+        // RecyclerView: wajib diberi layoutManager dan adapter (materi Pertemuan 10)
+        adapter = EventListAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_EVENT_ID, event.id)
             startActivity(intent)
         }
-        binding.listEvents.adapter = adapter
+        binding.rvEvents.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvEvents.adapter = adapter
 
         setupCategoryChips()
         binding.etSearch.doAfterTextChanged { applyFilter() }

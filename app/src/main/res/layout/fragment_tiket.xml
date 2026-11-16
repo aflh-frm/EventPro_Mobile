@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 07 Tiket Saya -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 07 Tiket Saya: Toolbar + TabLayout + ViewPager2 (materi Pertemuan 10) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surface"
-    android:orientation="vertical"
     tools:context=".tiket.TiketFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:title="Tiket Saya"
         app:titleTextAppearance="@style/TextAppearance.EventPro.ToolbarTitle" />
 
     <!-- Banner sukses setelah kirim bukti pembayaran -->
     <LinearLayout
         android:id="@+id/bannerSuccess"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bg_banner_success"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="12dp"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:visibility="visible">
 
         <ImageView
@@ -47,101 +52,43 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Tab status -->
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleStatus"
-        android:layout_width="match_parent"
+    <!-- TabLayout -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:background="@drawable/bg_segment_track"
-        android:padding="4dp"
-        app:checkedButton="@+id/btnTabAll"
-        app:selectionRequired="true"
-        app:singleSelection="true">
+        android:background="@color/surface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bannerSuccess"
+        app:tabGravity="fill"
+        app:tabIconTint="@color/tab_icon"
+        app:tabIndicatorColor="@color/primary_blue"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/primary_light"
+        app:tabSelectedTextColor="@color/primary_blue"
+        app:tabTextColor="@color/text_secondary" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTabAll"
-            style="@style/Widget.EventPro.Segment.Filled"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Semua" />
+    <View
+        android:id="@+id/tabDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/border_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTabWaiting"
-            style="@style/Widget.EventPro.Segment.Filled"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Menunggu" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTabRegistered"
-            style="@style/Widget.EventPro.Segment.Filled"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Terdaftar" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <FrameLayout
-        android:layout_width="match_parent"
+    <!-- ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:background="@color/background">
+        android:background="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabDivider" />
 
-        <ListView
-            android:id="@+id/listTickets"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"
-            android:padding="16dp" />
-
-        <LinearLayout
-            android:id="@+id/layoutEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="32dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:contentDescription="Belum ada tiket"
-                android:src="@drawable/ic_ticket"
-                app:tint="@color/text_hint" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Belum ada tiket"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="Tiket event yang kamu daftar akan muncul di sini."
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnExplore"
-                style="@style/Widget.EventPro.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:paddingHorizontal="24dp"
-                android:text="Jelajah Event" />
-        </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,21 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eventpro_mobile.BaseActivity
 import com.example.eventpro_mobile.DetailActivity
 import com.example.eventpro_mobile.R
-import com.example.eventpro_mobile.data.Event
 import com.example.eventpro_mobile.data.EventRepository
 import com.example.eventpro_mobile.data.SessionManager
 import com.example.eventpro_mobile.data.TicketRepository
 import com.example.eventpro_mobile.databinding.FragmentHomeBinding
 import com.example.eventpro_mobile.databinding.ItemCategoryChipBinding
-import com.example.eventpro_mobile.databinding.ItemEventCardBinding
 import com.example.eventpro_mobile.util.applySystemBarsPadding
 import com.example.eventpro_mobile.util.initials
-import com.example.eventpro_mobile.util.loadEventImage
 import com.example.eventpro_mobile.util.setLightStatusBar
-import com.example.eventpro_mobile.util.toRupiah
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 
@@ -103,27 +100,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    /** Kartu "Event Terbaru" dibuat dari layout item_event_card lalu ditambahkan ke LinearLayout. */
+    /** "Event Terbaru" dengan RecyclerView horizontal. */
     private fun showLatestEvents() {
         val events = EventRepository.getLatest(selectedCategory)
-        binding.layoutLatest.removeAllViews()
-        events.forEach { event ->
-            val item = ItemEventCardBinding.inflate(layoutInflater, binding.layoutLatest, false)
-            bindEventCard(item, event)
-            binding.layoutLatest.addView(item.root)
-        }
+        binding.rvLatest.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvLatest.adapter = EventCardAdapter(events) { event -> openDetail(event.id) }
         binding.tvLatestEmpty.visibility = if (events.isEmpty()) View.VISIBLE else View.GONE
-    }
-
-    private fun bindEventCard(item: ItemEventCardBinding, event: Event) {
-        item.imgEvent.loadEventImage(event.imageUrl)
-        item.tvCategory.text = event.category
-        item.tvDate.text = event.shortDate
-        item.tvTitle.text = event.title
-        item.tvLocation.text = event.location
-        item.tvPrice.text = event.price.toRupiah()
-        item.root.setOnClickListener { openDetail(event.id) }
-        item.btnDaftar.setOnClickListener { openDetail(event.id) }
     }
 
     private fun openDetail(eventId: Int) {

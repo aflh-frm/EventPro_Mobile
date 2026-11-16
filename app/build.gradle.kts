@@ -45,6 +45,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     // Library tambahan
+    implementation("androidx.recyclerview:recyclerview:1.3.2")     // Daftar event (RecyclerView)
     implementation("com.github.bumptech.glide:glide:4.16.0")      // Gambar dari URL (ListView/Custom Adapter)
     implementation("androidx.viewpager2:viewpager2:1.1.0")         // Onboarding (ViewPager2)
     implementation("com.tbuonomo:dotsindicator:5.1.0")             // Penanda halaman onboarding
